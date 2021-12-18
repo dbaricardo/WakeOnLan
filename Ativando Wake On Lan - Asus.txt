@@ -1,0 +1,27 @@
+WOL Fixed! For me was the Windows settings that fixed the type of shutdown somehow
+
+BIOS...
+Make screenshots
+Update BIOS
+Set settings how they were before update
+Set Advanced\APM Configuration\ErP Ready = DISABLED
+Set Advanced\APM Configuration\Power on by PCI-E = ENABLED
+
+
+WINDOWS...
+Open Powershell/CMD with ADMIN rights
+Run: REG ADD "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /V HiberbootEnabled /T REG_dWORD /D 0 /F
+Open device manager, find your NIC, open, drivers tab - Update driver. If nothing found, download directly from manufacturer website
+Once updated, reboot.
+After reboot, open NIC properties\Power Management tab:
+Tick all boxes - Allow computer to turn off device, allow to wake up, only allow magic packet.
+Open NIC properties\Advanced tab and (where available):
+Set Enable PME = ENABLED
+Set Energy Efficient Ethernet / Green etc = DISABLED
+Wake on Magic Packet = ENABLED
+Wake on Pattern Match = ENABLED
+Reboot, then after reboot shutdown.
+
+
+You should see the NIC stays enabled and you can boot from WOL packet. Bingo! Only took me 2 days.
+For me the solution was updating the drivers and disabling energy efficient mode. Crazy
